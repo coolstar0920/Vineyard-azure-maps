@@ -16,7 +16,7 @@ import "leaflet-choropleth";
 
 const columns = [
     { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'measure', headerName: 'Measure', width: 220 },
+    { field: 'measure', headerName: 'Measure', width: 220,  },
     { field: 'value', headerName: 'Value', width: 80 },
     {
         field: 'note',
@@ -30,7 +30,7 @@ const columns = [
         width: 170,
         renderCell: (params) => {
             return (
-                <img src={require(`../assets/img/${params.row.img}`).default} width="150" height="120" />
+                <img src={require(`../assets/img/${params.row.img}`).default} width="150" height="100" />
             )
         }
     }
@@ -157,7 +157,7 @@ const Choro = (props) => {
             <DialogContent dividers>
                 <Stack
                     sx={{
-                        height: 375,
+                        height: 400,
                         width: 780,
                         '& .MuiDataGrid-cell': {
                             '&:focus': {
@@ -175,7 +175,7 @@ const Choro = (props) => {
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        rowHeight={70}
+                        rowHeight={100}
                         // checkboxSelection
                         disableColumnMenu
                         disableSelectionOnClick
