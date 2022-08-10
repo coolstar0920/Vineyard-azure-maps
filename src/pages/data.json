@@ -11,6 +11,7 @@
             "type": "Feature",
             "properties": {
                 "id": 1,
+                "date": "2022-08-10",
                 "TOTAL": 76,
                 "img": "3.jpg",
                 "name": "Vineyard 1"
@@ -191,6 +192,7 @@
             "type": "Feature",
             "properties": {
                 "id": 3,
+                "date": "2022-08-10",
                 "TOTAL": 18,
                 "img": "1.jpg",
                 "name": "Vineyard 3"
@@ -403,6 +405,7 @@
             "type": "Feature",
             "properties": {
                 "id": 4,
+                "date": "2022-08-10",
                 "TOTAL": 14,
                 "img": "5.jpg",
                 "name": "Vineyard 4"
@@ -507,6 +510,7 @@
             "type": "Feature",
             "properties": {
                 "id": 5,
+                "date": "2022-08-10",
                 "TOTAL": 14,
                 "img": "4.jpg",
                 "name": "Vineyard 5"

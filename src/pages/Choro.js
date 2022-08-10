@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -7,7 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -16,9 +15,9 @@ import L from "leaflet";
 import "leaflet-choropleth";
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
     { field: 'date', headerName: 'Date', width: 130 },
     { field: 'measure', headerName: 'Measure', width: 200 },
+    { field: 'value', headerName: 'Value', width: 100 },
     {
         field: 'note',
         headerName: 'Note',
@@ -66,11 +65,6 @@ const Choro = (props) => {
     const [choropleth, setChoropleth] = useState(null)
     const [open, setOpen] = useState(false);
     const { search, geojson } = props;
-
-    const blocks = useMemo(() => {
-        if (!geojson) return [];
-        const sort = geojson.features.filter(item => search.indexOf(item.properties.id) != -1)
-    }, [search, geojson])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -134,23 +128,21 @@ const Choro = (props) => {
                         handleClickOpen()
                     }
 
-                    if (search.indexOf(feature.properties.id) != -1) {
-                        layer.on({
-                            // mouseover: func,
-                            // mouseout: func,
-                            click: handleClick
-                        });
-                    } else {
-                        layer.bindPopup(
-                            `<div>` +
-                            `<img src="${require(`../assets/img/${feature.properties.img}`).default}" width="250" height="160">` +
-                            `<div class="contents">` +
-                            `<h2>${feature.properties.name}</h2>` +
-                            `<p>TOTAL : ${feature.properties.TOTAL}km<sup>2</sup></p>` +
-                            `</div>` +
-                            `</div>`
-                        );
-                    }
+                    layer.on({
+                        // mouseover: func,
+                        // mouseout: func,
+                        click: handleClick
+                    });
+
+                    // layer.bindPopup(
+                    //     `<div>` +
+                    //     `<img src="${require(`../assets/img/${feature.properties.img}`).default}" width="250" height="160">` +
+                    //     `<div class="contents">` +
+                    //     `<h2>${feature.properties.name}</h2>` +
+                    //     `<p>TOTAL : ${feature.properties.TOTAL}km<sup>2</sup></p>` +
+                    //     `</div>` +
+                    //     `</div>`
+                    // );
 
                 }
             }).addTo(map);
@@ -173,7 +165,7 @@ const Choro = (props) => {
                         width: 780,
                         '& .MuiDataGrid-cell': {
                             '&:focus': {
-                                outline: 'none'
+                                outline: 'none !important'
                             }
                         },
                         '& .MuiDataGrid-columnHeader': {
@@ -187,7 +179,7 @@ const Choro = (props) => {
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        checkboxSelection
+                        // checkboxSelection
                         disableColumnMenu
                         disableSelectionOnClick
                         disableColumnSelector
