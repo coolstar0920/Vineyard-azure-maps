@@ -13,7 +13,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { Container } from "react-bootstrap";
 
 import Leaf from "./Leaf";
-import GEOS from './data.json';
+import GEOS from '../config/data.json';
 import { CInput } from "../components/Styled";
 
 const viewPort = {

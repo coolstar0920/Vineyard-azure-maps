@@ -13,10 +13,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useLeaflet } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-choropleth";
+import AddMeasure from './AddMeasure';
 
 const columns = [
     { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'measure', headerName: 'Measure', width: 220,  },
+    { field: 'measure', headerName: 'Measure', width: 220, },
     { field: 'value', headerName: 'Value', width: 80 },
     {
         field: 'note',
@@ -56,6 +57,7 @@ const Choro = (props) => {
     const [choropleth, setChoropleth] = useState(null)
     const [block, setBlock] = useState({});
     const [open, setOpen] = useState(false);
+    const [addDrawer, setAddDrawer] = useState(false);
     const { search, geojson } = props;
     const blockInfo = useMemo(() => {
         return block.data?.map((item, index) => ({ id: index, ...item }));
@@ -147,48 +149,51 @@ const Choro = (props) => {
     }, [geojson, search]);
 
     return (
-        <BootstrapDialog
-            onClose={handleClose}
-            open={open}
-        >
-            <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                Crop Measure Instances
-            </BootstrapDialogTitle>
-            <DialogContent dividers>
-                <Stack
-                    sx={{
-                        height: 400,
-                        width: 780,
-                        '& .MuiDataGrid-cell': {
-                            '&:focus': {
-                                outline: 'none !important'
+        <Stack>
+            <BootstrapDialog
+                onClose={handleClose}
+                open={open}
+            >
+                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                    {block.name} - Crop Measure Instances
+                </BootstrapDialogTitle>
+                <DialogContent dividers>
+                    <Stack
+                        sx={{
+                            height: 400,
+                            width: 780,
+                            '& .MuiDataGrid-cell': {
+                                '&:focus': {
+                                    outline: 'none !important'
+                                }
+                            },
+                            '& .MuiDataGrid-columnHeader': {
+                                '&:focus': {
+                                    outline: 'none !important'
+                                }
                             }
-                        },
-                        '& .MuiDataGrid-columnHeader': {
-                            '&:focus': {
-                                outline: 'none !important'
-                            }
-                        }
-                    }}>
-                    <DataGrid
-                        rows={blockInfo || []}
-                        columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                        rowHeight={100}
-                        // checkboxSelection
-                        disableColumnMenu
-                        disableSelectionOnClick
-                        disableColumnSelector
-                    />
-                </Stack>
-            </DialogContent>
-            <DialogActions sx={{ pr: '16px !important' }}>
-                <Button variant="contained" onClick={handleClose}>
-                    Add Measure
-                </Button>
-            </DialogActions>
-        </BootstrapDialog>
+                        }}>
+                        <DataGrid
+                            rows={blockInfo || []}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                            rowHeight={100}
+                            // checkboxSelection
+                            disableColumnMenu
+                            disableSelectionOnClick
+                            disableColumnSelector
+                        />
+                    </Stack>
+                </DialogContent>
+                <DialogActions sx={{ pr: '16px !important' }}>
+                    <Button variant="contained" onClick={() => setAddDrawer(true)}>
+                        Add Measure
+                    </Button>
+                </DialogActions>
+            </BootstrapDialog>
+            <AddMeasure state={addDrawer} onClose={() => setAddDrawer(false)} />
+        </Stack>
     );
 }
 
