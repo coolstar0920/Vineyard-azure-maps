@@ -11,10 +11,23 @@
             "type": "Feature",
             "properties": {
                 "id": 1,
-                "date": "2022-08-10",
-                "TOTAL": 76,
-                "img": "3.jpg",
-                "name": "Vineyard 1"
+                "name": "Vineyard 1",
+                "data": [
+                    {
+                        "date": "2022-08-10",
+                        "measure": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                        "value": 123,
+                        "note": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                        "img": "2.jpg"
+                    },
+                    {
+                        "date": "2022-08-10",
+                        "measure": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                        "value": 123,
+                        "note": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                        "img": "3.jpg"
+                    }
+                ]
             },
             "geometry": {
                 "type": "Polygon",
@@ -192,10 +205,16 @@
             "type": "Feature",
             "properties": {
                 "id": 3,
-                "date": "2022-08-10",
-                "TOTAL": 18,
-                "img": "1.jpg",
-                "name": "Vineyard 3"
+                "name": "Vineyard 3",
+                "data": [
+                    {
+                        "date": "2022-08-10",
+                        "measure": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+                        "value": 24,
+                        "note": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                        "img": "1.jpg"
+                    }
+                ]
             },
             "geometry": {
                 "type": "Polygon",
@@ -405,10 +424,16 @@
             "type": "Feature",
             "properties": {
                 "id": 4,
-                "date": "2022-08-10",
-                "TOTAL": 14,
-                "img": "5.jpg",
-                "name": "Vineyard 4"
+                "name": "Vineyard 4",
+                "data": [
+                    {
+                        "date": "2022-08-10",
+                        "measure": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt",
+                        "value": 14,
+                        "note": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt",
+                        "img": "5.jpg"
+                    }
+                ]
             },
             "geometry": {
                 "type": "Polygon",
@@ -510,10 +535,16 @@
             "type": "Feature",
             "properties": {
                 "id": 5,
-                "date": "2022-08-10",
-                "TOTAL": 14,
-                "img": "4.jpg",
-                "name": "Vineyard 5"
+                "name": "Vineyard 5",
+                "data": [
+                    {
+                        "date": "2022-08-10",
+                        "measure": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias",
+                        "value": 25,
+                        "note": "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est,",
+                        "img": "4.jpg"
+                    }
+                ]
             },
             "geometry": {
                 "type": "Polygon",

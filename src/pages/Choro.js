@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -16,33 +16,24 @@ import "leaflet-choropleth";
 
 const columns = [
     { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'measure', headerName: 'Measure', width: 200 },
-    { field: 'value', headerName: 'Value', width: 100 },
+    { field: 'measure', headerName: 'Measure', width: 220 },
+    { field: 'value', headerName: 'Value', width: 80 },
     {
         field: 'note',
         headerName: 'Note',
-        width: 150,
+        width: 175,
     },
     {
         field: 'image',
         headerName: 'Image',
         sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        width: 170,
+        renderCell: (params) => {
+            return (
+                <img src={require(`../assets/img/${params.row.img}`).default} width="150" height="120" />
+            )
+        }
     }
-];
-
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -63,8 +54,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const Choro = (props) => {
     const { map } = useLeaflet();
     const [choropleth, setChoropleth] = useState(null)
+    const [block, setBlock] = useState({});
     const [open, setOpen] = useState(false);
     const { search, geojson } = props;
+    const blockInfo = useMemo(() => {
+        return block.data?.map((item, index) => ({ id: index, ...item }));
+    }, [block])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -125,6 +120,7 @@ const Choro = (props) => {
                 },
                 onEachFeature: function (feature, layer) {
                     const handleClick = () => {
+                        setBlock(feature.properties)
                         handleClickOpen()
                     }
 
@@ -175,10 +171,11 @@ const Choro = (props) => {
                         }
                     }}>
                     <DataGrid
-                        rows={rows}
+                        rows={blockInfo || []}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
+                        rowHeight={70}
                         // checkboxSelection
                         disableColumnMenu
                         disableSelectionOnClick
@@ -186,9 +183,9 @@ const Choro = (props) => {
                     />
                 </Stack>
             </DialogContent>
-            <DialogActions>
-                <Button autoFocus onClick={handleClose}>
-                    Save changes
+            <DialogActions sx={{ pr: '16px !important' }}>
+                <Button variant="contained" onClick={handleClose}>
+                    Add Measure
                 </Button>
             </DialogActions>
         </BootstrapDialog>
