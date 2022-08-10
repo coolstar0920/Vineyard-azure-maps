@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -25,7 +25,6 @@ const viewPort = {
 };
 
 const Home = () => {
-    const ref = useRef();
     const [searchKey, setSearchKey] = useState('');
     const [checked, setChecked] = useState([]);
     const [showAll, setShowAll] = useState(true)
@@ -111,7 +110,6 @@ const Home = () => {
                 </Stack>
                 {GEOS && (
                     <Leaf
-                        setRef={ref}
                         viewPort={viewPort}
                         geojson={GEOS}
                         search={checked}
