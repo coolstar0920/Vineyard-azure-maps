@@ -12,7 +12,7 @@
             "properties": {
                 "id": 1,
                 "name": "Vineyard 1",
-                "data": [
+                "data": [ 
                     {
                         "date": "2022-08-10",
                         "measure": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",

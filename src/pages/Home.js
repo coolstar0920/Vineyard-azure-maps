@@ -9,20 +9,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { AzureMapsProvider } from 'react-azure-maps';
 
 import { Container } from "react-bootstrap";
 
-import Leaf from "./Leaf";
 import GEOS from '../config/data.json';
 import { CInput } from "../components/Styled";
-
-const viewPort = {
-    height: "100vh",
-    width: "100vw",
-    latitude: -41.5275314820192,
-    longitude: 173.718680632181,
-    zoom: 13
-};
+import MapController from "./MapController";
 
 const Home = () => {
     const [searchKey, setSearchKey] = useState('');
@@ -109,11 +102,16 @@ const Home = () => {
                     </Stack>
                 </Stack>
                 {GEOS && (
-                    <Leaf
-                        viewPort={viewPort}
-                        geojson={GEOS}
-                        search={checked}
-                    />
+                    <AzureMapsProvider>
+                        {/* <Leaf
+                            viewPort={viewPort}
+                            geojson={GEOS}
+                            search={checked}
+                        /> */}
+                        <MapController
+                            geojson={GEOS}
+                        />
+                    </AzureMapsProvider>
                 )}
             </Stack>
         </Container >
