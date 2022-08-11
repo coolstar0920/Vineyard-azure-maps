@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { AzureMapsContext } from 'react-azure-maps';
 import Stack from '@mui/material/Stack';
-import { layer, source } from 'azure-maps-control';
+import { layer, source, control } from 'azure-maps-control';
 import MapComponent from './MapComponent';
 import Detail from './Detail';
 
@@ -42,6 +42,11 @@ const MapController = (props) => {
                     }
                 }
             });
+            mapRef.controls.add(new control.StyleControl({
+                mapStyles: 'all'
+            }), {
+                position: 'top-left'
+            })
         }
         return () => {
             dataSourceRef.clear();
