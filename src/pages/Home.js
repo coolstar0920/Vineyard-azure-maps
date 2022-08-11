@@ -53,7 +53,7 @@ const Home = () => {
 
     return (
         <Container fluid="md" style={{ height: '100%' }}>
-            <Stack direction="row" sx={{ height: '100%' }}>
+            <Stack direction="row" sx={{ height: '100%', overflow: 'hidden' }}>
                 <Stack sx={{ width: 300 }}>
                     <Stack flexGrow={1}>
                         <Stack sx={{ p: 2 }} spacing={2}>
@@ -109,6 +109,7 @@ const Home = () => {
                             search={checked}
                         /> */}
                         <MapController
+                            search={checked}
                             geojson={GEOS}
                         />
                     </AzureMapsProvider>
