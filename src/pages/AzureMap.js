@@ -18,7 +18,7 @@ const selectedLayer = new layer.PolygonLayer(selecteddataSourceRef, null, {
 });
 
 const MapController = (props) => {
-    const { geojson, search } = props;
+    const { geojson, search, wkt } = props;
     const { mapRef, isMapReady } = useContext(AzureMapsContext);
     const [open, setOpen] = useState(false);
     const [block, setBlock] = useState({});
@@ -42,6 +42,8 @@ const MapController = (props) => {
             mapRef.sources.add(selecteddataSourceRef);
             mapRef.layers.add(selectedLayer);
 
+            mapRef.setStyle({ style: 'satellite' });
+
             mapRef.events.add('click', function (e) {
                 if (e.shapes && e.shapes.length > 0) {
                     let properties = e.shapes[0].properties;
@@ -52,11 +54,14 @@ const MapController = (props) => {
                     }
                 }
             });
+
+
             mapRef.controls.add(new control.StyleControl({
-                mapStyles: 'all'
+                mapStyles: ['satellite', 'road_shaded_relief'],
             }), {
                 position: 'top-left'
             })
+
 
         }
         return () => {
@@ -66,15 +71,41 @@ const MapController = (props) => {
     }, [isMapReady, geojson]);
 
     useEffect(() => {
-        dataSourceRef.clear();
-        selecteddataSourceRef.clear()
-        
-        const _unSelected = geojson.features.filter(item => search.indexOf(item.properties.id) == -1);
-        const _selected = geojson.features.filter(item => search.indexOf(item.properties.id) != -1);
+        if (isMapReady && mapRef) {
+            dataSourceRef.clear();
+            selecteddataSourceRef.clear()
 
-        dataSourceRef.add(_unSelected);
-        selecteddataSourceRef.add(_selected);
-    }, [search, geojson, isMapReady])
+            const _unSelected = geojson.features.filter(item => search.indexOf(item.properties.id) == -1);
+            const _selected = geojson.features.filter(item => search.indexOf(item.properties.id) != -1);
+
+            if (_selected.length) {
+                mapRef.setCamera({
+                    bounds: window.atlas.data.BoundingBox.fromData(_selected),
+                    padding: 100
+                });
+            } else {
+                mapRef.setCamera({
+                    bounds: window.atlas.data.BoundingBox.fromData(_unSelected),
+                    padding: 100
+                });
+            }
+
+            dataSourceRef.add(_unSelected);
+            selecteddataSourceRef.add(_selected);
+
+            // WKT MAP
+
+            // if (wkt) { 
+            //     dataSourceRef.setShapes(wkt);
+            //     dataSourceRef.add(wkt);
+            //     mapRef.setCamera({
+            //         bounds: window.atlas.data.BoundingBox.fromData(wkt),
+            //         padding: 100
+            //     });
+            // }
+
+        }
+    }, [search, geojson, isMapReady, wkt])
 
     return (
         <Stack sx={{ width: '100%', height: '104%' }}>

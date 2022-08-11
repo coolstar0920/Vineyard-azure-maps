@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -15,12 +15,14 @@ import { Container } from "react-bootstrap";
 
 import GEOS from '../config/data.json';
 import { CInput } from "../components/Styled";
-import MapController from "./MapController";
+import AzureMap from "./AzureMap";
+import { WKTDATA } from "../config";
 
 const Home = () => {
     const [searchKey, setSearchKey] = useState('');
     const [checked, setChecked] = useState([]);
     const [showAll, setShowAll] = useState(true)
+    const [wkt, setWkt] = useState(null)
 
     const searchedItem = useMemo(() => {
         setChecked([]);
@@ -50,6 +52,23 @@ const Home = () => {
             }
         })
     }
+
+    useEffect(() => {
+        const s = WKTDATA.split(/[\r\n]+/g);
+        let geoms = [];
+        for (let i = 0; i < s.length; i++) {
+            const g = window.atlas.io.ogc.WKT.read(s[0]);
+            if (g !== null) {
+                geoms = geoms.concat(g);
+            }
+        }
+        if (geoms.length > 0) {
+            setWkt(geoms)
+        } else {
+            alert('Unable to parse WKT.');
+        }
+    }, [])
+
 
     return (
         <Container fluid="md" style={{ height: '100%' }}>
@@ -103,14 +122,10 @@ const Home = () => {
                 </Stack>
                 {GEOS && (
                     <AzureMapsProvider>
-                        {/* <Leaf
-                            viewPort={viewPort}
-                            geojson={GEOS}
-                            search={checked}
-                        /> */}
-                        <MapController
+                        <AzureMap
                             search={checked}
                             geojson={GEOS}
+                            wkt={wkt}
                         />
                     </AzureMapsProvider>
                 )}

@@ -57,8 +57,6 @@ const Choro = (props) => {
                     }
 
                     layer.on({
-                        // mouseover: func,
-                        // mouseout: func,
                         click: handleClick
                     });
 
